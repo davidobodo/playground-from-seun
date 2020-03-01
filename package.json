@@ -1,0 +1,13 @@
+{
+  "name": "native-drag-and-drop2-drey-style",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-watch": "tsc -w main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
