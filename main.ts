@@ -67,7 +67,7 @@ const getDragBounds = () => {
     }
 
     return temporaryDragBounds;
-}
+};
 
 const getDragBoundForCurrentPosition = (e: DragEvent) => {
     // get exact position of dragTarget on page
@@ -76,7 +76,7 @@ const getDragBoundForCurrentPosition = (e: DragEvent) => {
     // console.log({ positionY })
     // console.log(dragBounds.find(o => positionY >= o.topBoundary && positionY <= o.bottomBoundary))
     return dragBounds.find(o => positionY >= o.topBoundary && positionY <= o.bottomBoundary)
-}
+};
 
 const createDragPlaceholder = (dragBound: DragBounds) => {
     const { index, operation } = dragBound;
@@ -96,7 +96,7 @@ const createDragPlaceholder = (dragBound: DragBounds) => {
     dragPlaceholder.style.left = `${left}px`;
 
     checklist.appendChild(dragPlaceholder);
-}
+};
 
 const removeDragPlaceholder = () => {
     const dragPlaceholder = checklist.querySelector(".drag-placeholder");
@@ -104,7 +104,7 @@ const removeDragPlaceholder = () => {
     if (!!dragPlaceholder) {
         dragPlaceholder.remove();
     }
-}
+};
 
 const moveChecklistItem = (element: any, dragBound: DragBounds) => {
     const { index, operation } = dragBound;
