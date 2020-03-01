@@ -58,6 +58,37 @@ var getDragBoundForCurrentPosition = function (e) {
     // console.log(dragBounds.find(o => positionY >= o.topBoundary && positionY <= o.bottomBoundary))
     return dragBounds.find(function (o) { return positionY >= o.topBoundary && positionY <= o.bottomBoundary; });
 };
+var createDragPlaceholder = function (dragBound) {
+    var index = dragBound.index, operation = dragBound.operation;
+    var dragPlaceholder = document.createElement("div");
+    dragPlaceholder.className = "drag-placeholder";
+    var top = 0;
+    var left = checklist.children[0].offsetLeft;
+    if (operation === "insert") {
+        top = checklist.children[index].offsetTop - 1;
+    }
+    else {
+        top = checklist.clientHeight;
+    }
+    dragPlaceholder.style.top = top + "px";
+    dragPlaceholder.style.left = left + "px";
+    checklist.appendChild(dragPlaceholder);
+};
+var removeDragPlaceholder = function () {
+    var dragPlaceholder = checklist.querySelector(".drag-placeholder");
+    if (!!dragPlaceholder) {
+        dragPlaceholder.remove();
+    }
+};
+var moveChecklistItem = function (element, dragBound) {
+    var index = dragBound.index, operation = dragBound.operation;
+    if (operation === "insert") {
+        checklist.insertBefore(element, checklist.children[index]);
+    }
+    else {
+        checklist.appendChild(element);
+    }
+};
 var handleMousedown = function (e) {
     dragTarget = e.target;
 };
@@ -80,12 +111,35 @@ var handleDragStart = function (e) {
 };
 var handleDrag = function (e) {
     e.stopPropagation();
-    var scopedDragBounds = getDragBoundForCurrentPosition(e);
-    console.log({ scopedDragBounds: scopedDragBounds });
+    var scopedDragBound = getDragBoundForCurrentPosition(e);
+    // console.log({ scopedDragBound })
+    // console.log(!!scopedDragBound)
+    // just a way to check if we are on a droppable zone
+    if (!!scopedDragBound) {
+        if (!!dragBound) {
+            console.log(scopedDragBound.index, dragBound.index);
+            if (scopedDragBound.index !== dragBound.index) {
+                removeDragPlaceholder();
+                createDragPlaceholder(scopedDragBound);
+                dragBound = scopedDragBound;
+            }
+        }
+        else {
+            removeDragPlaceholder();
+            createDragPlaceholder(scopedDragBound);
+            dragBound = scopedDragBound;
+        }
+    }
 };
 var handleDragEnd = function (e) {
+    e.stopPropagation();
+    removeDragPlaceholder();
+    if (!!dragBound) {
+        moveChecklistItem(e.target, dragBound);
+    }
 };
 var handleDragOver = function (e) {
+    e.preventDefault();
 };
 checklist.addEventListener('mousedown', handleMousedown);
 checklist.addEventListener('dragstart', handleDragStart);
