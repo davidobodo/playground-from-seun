@@ -10,6 +10,9 @@ let dragTarget: EventTarget;
 let dragBound: DragBounds;
 let dragBounds = new Array<DragBounds>();
 
+// --------------------------------------------------------
+// HELPER FUNCTIONS
+// --------------------------------------------------------
 const getDragBounds = () => {
     const checklistItems = checklist.children;
     const itemLength = checklistItems.length;
@@ -115,6 +118,11 @@ const moveChecklistItem = (element: any, dragBound: DragBounds) => {
         checklist.appendChild(element);
     }
 };
+
+
+// --------------------------------------------------------
+// DRAG EVENT HANDLERS
+// --------------------------------------------------------
 
 const handleMousedown = (e: DragEvent) => {
     dragTarget = e.target;

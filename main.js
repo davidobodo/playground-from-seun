@@ -2,6 +2,9 @@ var checklist = document.querySelector(".checklist");
 var dragTarget;
 var dragBound;
 var dragBounds = new Array();
+// --------------------------------------------------------
+// HELPER FUNCTIONS
+// --------------------------------------------------------
 var getDragBounds = function () {
     var checklistItems = checklist.children;
     var itemLength = checklistItems.length;
@@ -89,6 +92,9 @@ var moveChecklistItem = function (element, dragBound) {
         checklist.appendChild(element);
     }
 };
+// --------------------------------------------------------
+// DRAG EVENT HANDLERS
+// --------------------------------------------------------
 var handleMousedown = function (e) {
     dragTarget = e.target;
 };
